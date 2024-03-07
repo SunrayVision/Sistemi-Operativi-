@@ -1,0 +1,174 @@
+Lezione 5 7/03/2024
+- Eseguire la fase di login nel proprio sistema 
+- Esegui logout
+- Directory e file system 
+	- Dopo avere nuovamente fatto il login, senza spostarsi dalla propria HOME directory, visualizzare il contenuto della directory / (root)
+		- `cd`
+		- `ls`
+	- Sempre senza spostarsi dalla propria HOME directory, verificare il contenuto del file /etc/passwd.
+		- `cd ..`
+		- `cd ..
+		- `ls`
+		- `cd etc`
+		- `cat passwd`
+	- Visualizzare quale è la directory corrente
+		- `ls`
+	- Cambiare la directory corrente spostandosi nella directory di sistema /etc
+		- `cd ..`
+	- Senza spostarsi dalla directory /etc, visualizzare quale è la propria HOME directory.
+		- `ls ..`
+	- Visualizzare nuovamente il file passwd.
+		- `cat passwd`
+	- Provare a visualizzare il file shadow.
+		- `ls sha*`
+		- `sudo cat shadow`
+	- Tornare nella propria HOME directory e verificarlo con lo stesso comando usato al punto 5).
+		- `cd ..`
+		- `cd home`
+		- `ls`
+- Multiutenza e processing
+	- Visualizzare le informazioni relative a UID e GID dell’utente corrente.
+		- `id`
+	- Visualizzare i processi della sessione interattiva corrente, sia nella forma sintetica che nelle due forme più estese.
+		- `ps`
+	- Visualizzare tutti i processi attivi nel sistema, sia nella forma sintetica che nelle due forme più estese.
+		- `ps -e
+- Miscellanea
+	- Verificare il manuale di almeno uno dei comandi usati finora.
+		- `man pwd`
+	- Verificare dove si trova il file eseguibile di almeno uno dei comandi usati finora.
+		- `whereis ls`
+	- Verificare anche dove si trova il suo manuale.
+		- `which man`
+- Shell diverse
+	- Lanciare un’altra shell, ad esempio sh, e verificare i processi attivi e in particolare la relazione padre-figlio.
+		- `sh`
+	- All’interno della nuova shell precedentemente lanciata, lanciare un’altra shell, ad esempio bash, e verificare i processi attivi e in particolare la relazione padre-figlio
+		- `ps sh`
+- Nomi file e comando ls
+	- Dopo aver verificato di essere nella propria HOME directory, con l’editor vi (o qualunque altro editor) creare un file che abbia un nome molto lungo; si scrivano almeno alcune linee in tale file. Si verifichi l’esistenza di tale file con l’opportuno comando.
+		- `touch Sunray_Vision`
+		- `ls`
+		- `echo "Oh no, anyway" > Sunray_Vision`
+		- `ls Sunray_vision`
+		- `cat Suntray_Vision`
+	- Sempre nella propria HOME directory, con un editor creare un file che abbia un nome che contenga più occorrenze del carattere ‘.’; come prima, si scrivano almeno alcune linee in tale file. Si verifichi l’esistenza di tale file con l’opportuno comando.
+		- `touch Sunray.Vision.Sample`
+		- `echo "Fef è ..." > Sunray.Vision.Sample`
+		- `ls Sunray.Vision.Sample`
+		- `cat Sunray.Vision.Sample`
+	- Sempre nella propria HOME directory, con un editor creare un file che abbia un nome che inizi con il carattere ‘.’; come prima, si scrivano almeno alcune linee in tale file; si verifichi quindi il contenuto della home directory, forzando le due visualizzazioni che consentono di ‘vedere’ anche i file il cui nome inizia con ‘.’ .
+		-  `touch .Sunray.Vision.Sample`
+		- `echo "Fef è ..." > .Sunray.Vision.Sample`
+		- `ls .Sunray.Vision.Sample`
+		- `cat .Sunray.Vision.Sample`
+- Altre Opzioni del comando ls
+	- Cambiare la directory corrente spostandosi nella directory di sistema /home e visualizzare la sottogerarchia che parte da lì facendo vedere tutti i dettagli, anche sul ‘tipo’ dei file.
+		- `cd ..`
+		- `ls -Rl`
+	- Rimanendo nella directory di sistema /home, visualizzare il contenuto della propria HOME directory partendo dal file modificato più recentemente; aggiornare la data di modifica di uno dei file meno recenti e quindi verificarne l’effetto ripetendo la visualizzazione della propria HOME directory.
+		- `ls -t`
+		- `touch file_meno_recente`
+		- `ls -l`
+	- Rimanendo nella directory di sistema /home, visualizzare il contenuto della propria HOME directory in ordine alfabetico inverso
+		- `ls -r`
+	- Rimanendo nella directory di sistema /home, visualizzare le informazioni relative al file che rappresenta la propria HOME directory.
+		- `ls $HOME`
+- Pattern matching con * E?
+	- Ritornare nella propria HOME directory e creare con un editor alcuni file per verificare le regole del pattern matching sui nomi dei file.
+		- `cd`
+		- `touch fiel1`
+		- `touch file2`
+		- `touch file3`
+		- `touch filerandom`
+		- `ls`
+		- `man cat`
+		- `cat file?`
+		- `echo "NixOs" > file1`
+		-  `echo "NixOs" > file2`
+		-  `echo "Sono un crusader" > file3`
+		-  `echo "deus volt" > filerandom`
+		- `cat file*`
+	- Verificare le sostituzioni del pattern matching invocando una shell che mostri appunto tali sostituzioni.
+		- `ls file*`
+		- `ls file?`
+	- Verificare il pattern matching anche con il comando per visualizzare sullo standard output delle stringhe.
+		-  `echo file*`
+		- `echo file?`
+- Diritti di accesso per i file
+	- Verificare i diritti di accesso dei file /etc/passwd e /etc/shadow.
+		- `cd ..`
+		- `cd ..`
+		- `cd etc`
+		- `ls -l passwd`
+		- `ls  -l shadow`
+	- Eliminare, per l’utente corrente, il diritto di scrittura ad uno dei propri file e verificare il comportamento di un editor su quel file.
+		- `cd home`
+		- `chmod u-w file1`
+		- `ls file1`
+		- `echo "pinco pallino" > file1`
+			- restituisce accesso negato
+	- Eliminare anche il diritto di lettura sullo stesso file e provare a visualizzare il file.
+		- `cd home`
+		- `chmod u-r file1`
+		- `ls file1`
+		- `cat file1`
+			- restituisce accesso negato
+	- Usando la notazione ottale, ripristinare per l’utente corrente sia il diritto di lettura che quello di scrittura, togliendo qualunque altro diritto a gruppo e altri (indipendentemente da quali diritti potevano avere precedentemente).
+		- `chmod 600 file1`
+		- `ls -l`
+- Creazione e cancellazione directory
+	- Creare una sottodirectory nella propria HOME directory dandogli nome provaDir. Si verifichi l’esistenza di tale sottodirectory con l’opportuno comando.
+		- `mkdir provaDir`
+	- Controllare il contenuto di tale sottodirectory con l’opportuno comando.
+		- `ls provaDir`
+	- Cancellare la sottodirectory appena creata.
+		- `rmdir provaDir`
+- Copia di file 
+	- Creare nuovamente la sottodirectory provaDir e creare, in tale sottodirectory, una copia di un file presente nella propria HOME directory e verificare l’esistenza di tale copia.
+		- `mkdir provaDir`
+		- `cp nomefile provaDir`
+		- `ls provaDir`
+	- Modificare la copia e verificare che la modifica non abbia avuto effetto sul file ‘sorgente
+		- `nano provaDir nomefile`
+		- inserire testo
+	- Fare la copia di un file presente nella propria HOME directory (si può usare, volendo, anche lo stesso file di prima) nella sottodirectory provaDir lasciando lo stesso nome del file originale e mantenendo/preservando in particolare la data del file e verificare l’esistenza di tale copia
+		- `cp altrofile -a provaDir`
+	- Fare la copia della sottodirectory provaDir utilizzando un singolo comando e usando come nome della copia provaDir.Originale.
+		- `cp provaDir -r provaDir.Originale`
+- Cancellazione file e directory
+	- Cancellare il file creato al punto 36), facendo attenzione che il S.O. vi chieda la conferma, usando il nome relativo alla directory corrente e quindi rimanendo nella propria HOME directory.
+		- `rm provaDir -ri`
+	- Cancellare il file creato al punto 38), facendo attenzione che il S.O. vi chieda la conferma, dopo essersi spostati nella sottodirectory provaDir e quindi usando il nome relativo semplice.
+	- Creare nella sottodirectory provaDir almeno un file con un editor. Si verifichi l’esistenza di tale file con l’opportuno comando.
+	- Cancellare la sottodirectory provaDir.
+	- Usando la ridirezione dello standard output del comando-filtro cat, creare un file di nome prova (inserire almeno 5-6 linee con più parole per linea). Ricordarsi che la fine dei caratteri dallo standard input, se collegato (default) alla tastiera, si ottiene con ^D (CTRL-D).
+		- `cat > prova`
+		- inserire testo 
+		- #ctrl + #d
+	- Usando la ridirezione dello standard output del comando pwd e del comando ls -l, aggiungere tale output al file prova precedentemente creato.
+		- `pwd > prova`
+		- `ls --l > prova`
+	- Usando il comando-filtro cat con le opportune ridirezioni, creare una copia del file prova e dargli nome p.txt.
+		- `cat < prova > p.txt`
+	- Usando il comando-filtro cat con l’opportuna ridirezione, controllare il contenuto finale del file prova.
+		- `cat prova`
+	- Usando il comando cat con la ridirezione dello standard output in append aggiungere il contenuto del file prova al file p.txt almeno altre 5 volte in modo da avere un file che contenga molte linee. Verificare, poi, il contenuto del file p.txt.
+		- `cat < prova >> p.txt`
+- More
+	- Usando la ridirezione dello standard input e il comando-filtro more, visualizzare nuovamente il contenuto del file p.txt. Ricordarsi che per andare avanti di una videata si deve usare la barra spaziatrice, per avanzare di una singola linea si deve usare il tasto enter (invio) e per uscire se non si vuole più proseguire si deve usare il tasto q (QUIT).
+		- `more p.txt`
+		- premere #spazio
+		- #enter uno alla volta
+		- #q esce
+	- Verificare il comportamento del comando more, usando il comando more p*.
+		- `more p*`
+- Extra 
+	- Creare una sottodirectory nella propria HOME directory dandogli nome dir ed inserire in essa alcuni file; quindi, eliminare, per l’utente corrente, il diritto di lettura sulla directory e verificare le azioni che si possono fare e quelle che sono impedite.
+		- bra è stanco
+	- Rimettere il diritto di lettura e procedere con l’eliminazione del diritto di scrittura e di nuovo verificare le azioni che si possono fare e quelle che sono impedite.
+		- pls no puncterino
+	- Rimettere il diritto di scrittura e procedere con l’eliminazione del diritto di esecuzione e di nuovo verificare le azioni che si possono fare e quelle che sono impedite
+		- pls no puncterino
+	- Provare anche ad eliminare due diritti alla volta, invece che uno, provando le varie combinazioni: eliminare diritto di lettura e di scrittura; eliminare diritto di lettura e di esecuzione; eliminare diritto di scrittura e di esecuzione.
+		- pls no puncterino
